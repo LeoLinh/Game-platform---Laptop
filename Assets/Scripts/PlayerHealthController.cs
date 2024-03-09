@@ -65,6 +65,7 @@ public class PlayerHealthController : MonoBehaviour
                 //gameObject.SetActive(false);
 
                 LifeController.instance.Respawn();
+
             }
             else
             {
@@ -73,6 +74,8 @@ public class PlayerHealthController : MonoBehaviour
                 theSR.color = fadeColor;
 
                 thePlayer.KnockBack();
+
+                AudioManager.Instance.PLaySFX(13);
             }
 
             UIController.instance.updateHealthDisplay(currentHealth, maxhealth);
