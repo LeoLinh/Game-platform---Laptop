@@ -16,6 +16,8 @@ public class LevelExit : MonoBehaviour
 
     public GameObject blocker;
 
+    public float fadeTime = 1f;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (isEnding == false)
@@ -38,7 +40,11 @@ public class LevelExit : MonoBehaviour
 
     IEnumerator EndLevelCo()
     {
-        yield return new WaitForSeconds(waitToEngLevel);
+        yield return new WaitForSeconds(waitToEngLevel - fadeTime);
+
+        UIController.instance.FadeToBlack();
+
+        yield return new WaitForSeconds(fadeTime);
 
         SceneManager.LoadScene(nextLevel);
     }
