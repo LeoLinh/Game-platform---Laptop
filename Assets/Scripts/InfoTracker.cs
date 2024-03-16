@@ -14,6 +14,12 @@ public class InfoTracker : MonoBehaviour
 
             transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
+
+            if (PlayerPrefs.HasKey("Lives"))
+            {
+                currentLives = PlayerPrefs.GetInt("Lives");
+                currentFruit = PlayerPrefs.GetInt("fruit");
+            }           
         }
         else
         {
@@ -34,5 +40,11 @@ public class InfoTracker : MonoBehaviour
         {
             currentFruit = CollectibleManager.Instance.collectibleCount;
         }
+    }
+
+    public void SaveInfo()
+    {
+        PlayerPrefs.SetInt("Lives", currentLives);
+        PlayerPrefs.SetInt("fruit", currentFruit);
     }
 }

@@ -7,10 +7,19 @@ public class MainMenu : MonoBehaviour
 {
     public string firstLevel;
 
+    public int startingLives = 3, startingfruit = 0;
+
+    public GameObject continueButton;
+
     // Start is called before the first frame update
     void Start()
     {
         AudioManager.Instance.PlayMenuMusic();
+
+        if (PlayerPrefs.HasKey("currentLevel"))
+        {
+            continueButton.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -20,10 +29,21 @@ public class MainMenu : MonoBehaviour
         {
             AudioManager.Instance.PlayLevelMusic(1);
         }
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+#endif
     }
 
     public void StartGame()
     {
+        InfoTracker.Instance.currentLives = startingLives;
+        InfoTracker.Instance.currentFruit = startingfruit;
+
+        InfoTracker.Instance.SaveInfo();
+
         SceneManager.LoadScene(firstLevel);
     }
 
@@ -32,5 +52,10 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
 
         Debug.Log("I quit");
+    }
+
+    public void Continue()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("currentLevel"));
     }
 }
