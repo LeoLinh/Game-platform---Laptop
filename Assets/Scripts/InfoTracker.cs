@@ -12,6 +12,7 @@ public class InfoTracker : MonoBehaviour
         {
             Instance = this;
 
+            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -21,4 +22,17 @@ public class InfoTracker : MonoBehaviour
     }
 
     public int currentLives, currentFruit;
+
+    public void GetInfo()
+    {
+        if (LifeController.instance != null)
+        {
+            currentLives = LifeController.instance.currentLives;
+        }
+
+        if (CollectibleManager.Instance != null)
+        {
+            currentFruit = CollectibleManager.Instance.collectibleCount;
+        }
+    }
 }
